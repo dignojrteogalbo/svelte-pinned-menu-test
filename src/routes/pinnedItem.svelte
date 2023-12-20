@@ -1,15 +1,9 @@
-<style>
-    .content {
-        padding: 25px 10px;
-    }
-</style>
-
 <script lang="ts">
-    import type { Writable } from "svelte/store";
+    import type { Pinnable } from "./pinned";
 
-    export let item: Writable<any>;
+    export let item: Pinnable;
 </script>
 
 <div class="content">
-    {$item.content}
+    {@html $item.content}
 </div>

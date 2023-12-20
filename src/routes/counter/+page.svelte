@@ -7,8 +7,8 @@
 
 <script lang="ts">
     import { onDestroy } from "svelte";
-    import { pinItem } from "../pinned";
     import { counterStore } from "./counterStore.ts";
+    import PinButton from "../pinButton.svelte";
 
     let count = localStorage.count ? JSON.parse(localStorage.count) : 0;
     let content: any;
@@ -39,7 +39,7 @@
 
 <div>
     <p>{$counterStore.content}</p>
-    <button on:click={() => pinItem(counterStore)}>Pin me!</button>
+    <PinButton item={counterStore} />
 </div>
 <div>
     <button on:click={increment}>+</button>
@@ -49,3 +49,4 @@
 
 <a href="/">Go home.</a>
 <a href="/data">Go data.</a>
+<a href="/cats">Go cats.</a>

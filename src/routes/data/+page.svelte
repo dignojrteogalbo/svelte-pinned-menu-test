@@ -6,7 +6,7 @@
 </style>
 
 <script lang="ts">
-    import { pinItem } from "../pinned.ts";
+    import PinButton from "../pinButton.svelte";
     import { stuff, otherStuff, moreStuff } from "./dataStore.ts";
 </script>
 
@@ -14,20 +14,21 @@
 
 <div>
     <p>Stuff</p>
-    <button on:click={() => pinItem(stuff)}>Pin me!</button>
+    <PinButton item={stuff} />
 </div>
 
 <div>
     <p>Other Stuff</p>
-    <button on:click={() => pinItem(otherStuff)}>Pin me!</button>
+    <PinButton item={otherStuff} />
 </div>
 
 <div>
     <p>More Stuff</p>
-    <button on:click={() => pinItem(moreStuff)}>Pin me!</button>
+    <PinButton item={moreStuff} />
 </div>
 
 <br>
 
 <a href="/">Go home.</a>
 <a href="/counter">Go counter.</a>
+<a href="/cats">Go cats.</a>

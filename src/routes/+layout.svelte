@@ -2,18 +2,22 @@
     .pinned {
         display: flex;
         flex-direction: column;
-        width: 200px;
+        width: 220px;
         position: fixed;
         bottom: 0;
         right: 0;
         border-radius: 20px 20px 0px 0px;
         border: 1px solid grey;
-        border-bottom: none;
+        max-height: 700px;
+        overflow-y: scroll;
     }
 
     .toggle {
+        position: sticky;
+        top: calc(100% - 700px);
         border-radius: 20px 20px 0px 0px;
         border: none;
+        border-bottom: 1px solid grey;
         width: auto;
     }
 
@@ -21,13 +25,22 @@
         display: flex;
         width: auto;
         border: 1px solid grey;
-        border-bottom: none;
+        border-top: none;
         border-left: none;
         border-right: none;
+        background-color: white;
     }
 
-    .item .content {
+    .pinned :last-child {
+        border-bottom: none;
+    }
+
+    .item :global(.content) {
         padding: 25px 10px;
+    }
+
+    .item :global(.content img) {
+        max-width: 150px;
     }
 
     .item button {
@@ -44,7 +57,6 @@
     import { itemStore, type Pinnable } from "./pinned.ts";
     import { onDestroy } from "svelte";
     import PinnedItem from "./pinnedItem.svelte";
-    import type { Writable } from "svelte/store";
 
     let show = false;
     let items: any[] = [];
