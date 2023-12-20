@@ -10,7 +10,7 @@
     import { pinItem } from "../pinned";
     import { counterStore } from "./counterStore.ts";
 
-    let count = 0;
+    let count = localStorage.count ? JSON.parse(localStorage.count) : 0;
     let content: any;
     $: counterStore.update(() => ({id: "counter", content: `The count is ${count}`}));
 
@@ -19,14 +19,21 @@
 
     function increment() {
         count += 1;
+        updateLocalStorage();
     }
 
     function decrement() {
         count -= 1;
+        updateLocalStorage();
     }
 
     function reset() {
         count = 0;
+        updateLocalStorage();
+    }
+
+    function updateLocalStorage() {
+        localStorage.count = JSON.stringify(count);
     }
 </script>
 
