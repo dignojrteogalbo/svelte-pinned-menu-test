@@ -1,16 +1,23 @@
+import type { ComponentType } from "svelte";
 import { writable, type Writable } from "svelte/store";
 
-type Item = {
+export type Pinnable = {
     id: string;
-    content: string;
+    component: ComponentType;
 }
-
-export type Pinnable = Writable<Item>
 
 export const itemStore: Writable<Pinnable[]> = writable([]);
 
-export function pinItem(add: Writable<Item>) {
+export function pinItem(add: Pinnable) {
+    console.log(`pinItem() called: ${add}`);
     itemStore.update((items) =>
-        [...items.filter((item) => item != add), add]
+        [add, ...items.filter((item) => item != add)]
+    );
+}
+
+export function removeItem(remove: Pinnable) {
+    console.log(`removeItem() called: ${remove}`);
+    itemStore.update((items) =>
+        items.filter((item) => item != remove)
     );
 }

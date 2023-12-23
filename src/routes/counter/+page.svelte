@@ -6,40 +6,34 @@
 </style>
 
 <script lang="ts">
-    import { onDestroy } from "svelte";
     import { counterStore } from "./counterStore.ts";
     import PinButton from "../pinButton.svelte";
+    import Counter from "./counter.svelte";
+    import { browser } from "$app/environment";
 
-    let count = localStorage.count ? JSON.parse(localStorage.count) : 0;
-    let content: any;
-    $: counterStore.update(() => ({id: "counter", content: `The count is ${count}`}));
-
-    const unsubscribe = counterStore.subscribe((value) => content = value);
-    onDestroy(unsubscribe);
+    let count = browser && localStorage.count ? JSON.parse(localStorage.count) : 0;
 
     function increment() {
         count += 1;
-        updateLocalStorage();
     }
 
     function decrement() {
         count -= 1;
-        updateLocalStorage();
     }
 
     function reset() {
         count = 0;
-        updateLocalStorage();
     }
 
-    function updateLocalStorage() {
-        localStorage.count = JSON.stringify(count);
+    $: {
+        if (browser) localStorage.count = JSON.stringify(count);
+        counterStore.update(() => count);
     }
 </script>
 
 <div>
-    <p>{$counterStore.content}</p>
-    <PinButton item={counterStore} />
+    <Counter />
+    <PinButton item={{ id: "counter", component: Counter }} />
 </div>
 <div>
     <button on:click={increment}>+</button>

@@ -21,7 +21,8 @@
         width: auto;
     }
 
-    .item {
+    .empty {
+        padding: 25px 10px;
         display: flex;
         width: auto;
         border: 1px solid grey;
@@ -34,65 +35,49 @@
     .pinned :last-child {
         border-bottom: none;
     }
-
-    .item :global(.content) {
-        padding: 25px 10px;
-    }
-
-    .item :global(.content img) {
-        max-width: 150px;
-    }
-
-    .item button {
-        border: none;
-        background-color: #db2828;
-        color: white;
-        margin-left: auto;
-        width: 25px;
-        text-align: center;
-    }
 </style>
 
 <script lang="ts">
+    import { dndzone } from "svelte-dnd-action";
     import { itemStore, type Pinnable } from "./pinned.ts";
     import { onDestroy } from "svelte";
     import PinnedItem from "./pinnedItem.svelte";
 
     let show = false;
     let items: any[] = [];
+    let dragDisabled: boolean;
+
+    const unsubscribe = itemStore.subscribe((values) => items = values);
+    onDestroy(unsubscribe);
+
+    $: dragDisabled = !items.length;
 
     function showPinned() {
         console.log(`showPinned() called: show is ${show}`);
         show = !show;
     }
 
-    function removeItem(remove: Pinnable) {
-        console.log(`removeItem() called: ${remove}`);
-        itemStore.update((items) =>
-            items.filter((item) => item != remove)
-        );
+    function handleSort(e: CustomEvent<DndEvent<Pinnable>>) {
+        console.log("items", items);
+        console.log("detail", e.detail.items);
+        itemStore.update(() => e.detail.items);
     }
-
-    const unsubscribe = itemStore.subscribe((values) => items = values);
-    onDestroy(unsubscribe);
 </script>
 
 <div class="pinned">
     <button on:click={showPinned} class="toggle"><h1>Pinned</h1></button>
     {#if show}
-    <div class="items">
-        {#if items.length != 0}
-            {#each items as item}
-            <div class="item">
-                <PinnedItem bind:item={item} />
-                <button on:click={() => removeItem(item)}>X</button>
-            </div>
-            {/each}
-        {:else}
-            <div class="item">
-                <div class="content">
-                    No pinned items!
-                </div>
+    <div class="items"
+        use:dndzone={{items, dragDisabled}}
+        on:consider={handleSort}
+        on:finalize={handleSort}
+    >
+        {#each items as item (item.id)}
+            <PinnedItem bind:item={item}/>
+        {/each}
+        {#if !items.length}
+            <div class="empty">
+                No pinned items!
             </div>
         {/if}
     </div>

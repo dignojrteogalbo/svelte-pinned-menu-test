@@ -1,9 +1,9 @@
 <script>
     import PinButton from "../pinButton.svelte";
-    import { pinnable, src, alt } from "./catStore";
+    import Image from "./Image.svelte";
 </script>
 
-<img {src} {alt}/><PinButton item={pinnable}/>
+<Image /><PinButton item={{ id: "image", component: Image }}/>
 
 <a href="/">Go home.</a>
 <a href="/data">Go data.</a>

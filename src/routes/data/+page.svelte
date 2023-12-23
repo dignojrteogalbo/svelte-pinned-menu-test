@@ -7,24 +7,26 @@
 
 <script lang="ts">
     import PinButton from "../pinButton.svelte";
-    import { stuff, otherStuff, moreStuff } from "./dataStore.ts";
+    import MoreStuff from "./MoreStuff.svelte";
+    import OtherStuff from "./OtherStuff.svelte";
+    import Stuff from "./Stuff.svelte";
 </script>
 
 <h1>Data</h1>
 
 <div>
-    <p>Stuff</p>
-    <PinButton item={stuff} />
+    <Stuff />
+    <PinButton item={{ id: "stuff", component: Stuff }} />
 </div>
 
 <div>
-    <p>Other Stuff</p>
-    <PinButton item={otherStuff} />
+    <OtherStuff />
+    <PinButton item={{ id: "other-stuff", component: OtherStuff }} />
 </div>
 
 <div>
-    <p>More Stuff</p>
-    <PinButton item={moreStuff} />
+    <MoreStuff />
+    <PinButton item={{ id: "more-stuff", component: MoreStuff }} />
 </div>
 
 <br>

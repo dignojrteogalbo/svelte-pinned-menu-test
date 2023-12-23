@@ -11,7 +11,7 @@
     onDestroy(unsubscribe);
 
     $: {
-        disabled = items.includes(item);
+        disabled = Boolean(items.find(({ id }) => id == item.id));
         label = disabled ? "Pinned!" : "Pin me!";
     }
 </script>
