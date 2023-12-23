@@ -12,6 +12,8 @@
 
     .content {
         padding: 25px 10px;
+        width: 180px;
+        flex-wrap: wrap;
     }
 
     .item:hover button {
@@ -24,7 +26,6 @@
     .item button {
         display: none;
         border: none;
-        background-color: white;
         padding: 0;
         margin: 0;
         width: 25px;
