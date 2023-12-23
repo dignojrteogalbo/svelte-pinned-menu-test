@@ -3,3 +3,4 @@
 <a href="/data">Go data.</a>
 <a href="/counter">Go counter.</a>
 <a href="/cats">Go cats.</a>
+<a href="/time">Go time.</a>

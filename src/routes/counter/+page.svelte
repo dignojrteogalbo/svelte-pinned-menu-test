@@ -44,3 +44,4 @@
 <a href="/">Go home.</a>
 <a href="/data">Go data.</a>
 <a href="/cats">Go cats.</a>
+<a href="/time">Go time.</a>
